@@ -36,15 +36,6 @@ import org.neo4j.configuration.GraphDatabaseSettings;
 import org.neo4j.configuration.helpers.NormalizedDatabaseName;
 import org.neo4j.io.fs.FileUtils;
 
-/**
- * File layout representation of the particular database. Facade for any kind of file lookup for a particular database storage implementation.
- * Any file retrieved from a layout can be considered a canonical file.
- * <br/>
- * No assumption should be made about where and how files of a particular database are positioned and all those details should be encapsulated inside.
- *
- * @see Neo4jLayout
- * @see DatabaseFile
- */
 public class DatabaseLayout
 {
     private static final String DATABASE_LOCK_FILENAME = "database_lock";

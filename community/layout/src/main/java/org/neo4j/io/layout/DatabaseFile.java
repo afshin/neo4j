@@ -23,16 +23,6 @@ import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
 
-/**
- * Enumeration of storage implementation specific files for particular database.
- * Any internal details of this enumeration is hidden and should not be visible to anyone except of implementation of specific database layout.
- * Should be used only for referencing back specific files in the database layout based on different store types.
- *
- * Any database file that represented here can have internal details like several actual file names, other internal characteristic that are store specific.
- *
- * @see DatabaseLayout
- * @see Neo4jLayout
- */
 public enum DatabaseFile
 {
     NODE_STORE( DatabaseFileNames.NODE_STORE ),
@@ -97,13 +87,6 @@ public enum DatabaseFile
         return hasIdFile;
     }
 
-    /**
-     * Determine database file for provided file name.
-     *
-     * @param name - database file name to map
-     * @return an {@link Optional} that wraps the matching database file that matches to the specified name,
-     * or {@link Optional#empty()} if the given file name does not match to any of database files.
-     */
     public static Optional<DatabaseFile> fileOf( String name )
     {
         requireNonNull( name );

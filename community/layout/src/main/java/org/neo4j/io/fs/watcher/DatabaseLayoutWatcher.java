@@ -33,13 +33,6 @@ import org.neo4j.kernel.lifecycle.LifecycleAdapter;
 
 import static java.util.Objects.requireNonNull;
 
-/**
- * File system fileWatcher that will remember all the files that it was asked to watch
- * and will register them in real file watcher during {@link #startWatching()} call.
- * When watcher will be stopped all registered resources will be closed.
- *
- * Described pattern allows to perform repeatable startWatching/stopWatching cycle for pre-configured set of files provided by {@link DatabaseLayout}.
- */
 public class DatabaseLayoutWatcher extends LifecycleAdapter
 {
     private final FileWatcher fileWatcher;

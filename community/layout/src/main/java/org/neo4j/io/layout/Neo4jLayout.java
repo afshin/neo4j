@@ -36,47 +36,6 @@ import org.neo4j.io.fs.FileUtils;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-/**
- * File layout representation of neo4j instance that provides the ability to reference any store
- * specific file that can be created by particular store implementation.
- * <br/>
- * <b>Any file lookup should use provided layout or particular {@link DatabaseLayout database layout}.</b>
- * <br/>
- * Neo4J layout represent layout of whole neo4j instance while particular {@link DatabaseLayout database layout} represent single database.
- * Neo4J layout should be used as a factory of any layouts for particular database.
- * <br/>
- * Any user-provided home or store directory will be transformed to canonical file form and any subsequent layout file
- * lookup should be considered as operations that provide canonical file form.
- * <br/>
- * Store lock file is global per store and should be looked from specific store layout.
- * <br/>
- * Example of Neo4j layout for store with 2 databases:
- * <pre>
- *  home directory
- *  | \ data directory
- *  | | \ store directory
- *  | | | \ database directory (neo4j, represented by separate database layout)
- *  | | | | \ particular database files
- *  | | | \ database directory (other represented by separate database layout)
- *  | | | | \ particular database files
- *  | | | \ store_lock
- *  | | \ transaction logs directory
- *  | | | \ database transactions directory (neo4j, represented by separate database layout)
- *  | | | | \ particular database transactions files
- *  | | | \ database transactions directory (other represented by separate database layout)
- *  | | | | \ particular database transactions files
- *  | | \ script directory
- *  | | | \ database script directory (neo4j, represented by separate database layout)
- *  | | | | \ particular database script files
- *  | | | \ database script directory (other represented by separate database layout)
- *  | | | | \ particular database script files
- * </pre>
- * The current implementation does not keep references to all requested and provided files and requested layouts but can be easily enhanced to do so.
- * <br/>
- * Most file & directory locations of the layout can be individually configured using their corresponding setting.
- *
- * @see DatabaseLayout
- */
 public final class Neo4jLayout
 {
     private static final String STORE_LOCK_FILENAME = "store_lock";
@@ -146,31 +105,16 @@ public final class Neo4jLayout
         }
     }
 
-    /**
-     * Provide layout for a database with provided name.
-     * No assumptions whatsoever should be taken in regards of database location.
-     * Newly created layout should be used to any kind of file related requests in scope of a database.
-     * @param databaseName database name to provide layout for
-     * @return requested database layout
-     */
     public DatabaseLayout databaseLayout( String databaseName )
     {
         return DatabaseLayout.of( this, databaseName );
     }
 
-    /**
-     * Databases root directory where all databases are located.
-     * @return all databases root directory
-     */
     public Path databasesDirectory()
     {
         return databasesRootDirectory;
     }
 
-    /**
-     * Neo4J root directory.
-     * @return the root of the Neo4j instance
-     */
     public Path homeDirectory()
     {
         return homeDirectory;
